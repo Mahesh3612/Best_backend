@@ -37,7 +37,7 @@ export const signup = catchAsync(async (req, res, next) => {
 export const login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email, password });
   if (!user) {
     return next(new AppError("Invalid credentials", 401));
   }

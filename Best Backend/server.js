@@ -10,6 +10,8 @@ import cookieParser from "cookie-parser";
 import authRoutes from "./src/routes/auth.routes.js";
 import AppError from "./src/utils/AppError.js";
 import errorHandler from "./src/middlewares/error.middleware.js";
+import mongoSanitize from "express-mongo-sanitize";
+import xss from "xss-clean";
 
 dotenv.config();
 const PORT = process.env.PORT || 5000;
@@ -21,8 +23,11 @@ app.use(
     credentials: true,
   })
 );
+
 app.use(express.json());
 app.use(cookieParser());
+app.use(mongoSanitize());
+app.use(xss());
 
 app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
